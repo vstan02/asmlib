@@ -12,11 +12,10 @@ section .text
 		.iter:
 			cmp [rax+rbx], byte 0x0
 			je .close
-
 			inc rbx
 			jmp .iter
+
 		.close:
 			mov rax, rbx
-
 			pop rbx
 			ret
