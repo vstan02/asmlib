@@ -8,5 +8,6 @@ make setup
 
 ##### Compiles libraries
 ```
-make # or 'make build'
+make build
+# or 'make'
 ```
