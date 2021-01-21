@@ -1,7 +1,7 @@
 global _start
 
-extern sys_exit
 extern str_print
+extern sys_exit
 
 section .data
 	msg db "Hello World!", 0xA
