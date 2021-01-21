@@ -1,13 +1,24 @@
-EXECUTABLE = Test
+BLANK =
+define EOL
 
-default: build run
+$(BLANK)
+endef
 
-build: src/main.asm
-	nasm -felf64 src/main.asm -o bin/main.o
-	ld bin/main.o -o bin/$(EXECUTABLE)
+CC = nasm -felf64
 
-run: bin/$(EXECUTABLE)
-	./bin/$(EXECUTABLE)
+SRC_DIR = src
+LIB_DIR = lib
 
-dump: bin/$(EXECUTABLE)
-	objdump -d ./bin/$(EXECUTABLE)
+LIBS := sys io
+
+LIB_SOURCE = $(SRC_DIR)/$(lib).asm
+LIB_OBJECT = $(LIB_DIR)/$(lib).o
+LIB_COMPILE = $(CC) $(LIB_SOURCE) -o $(LIB_OBJECT) $(EOL)
+
+default: build
+
+setup:
+	mkdir -p $(LIB_DIR)
+
+build: $(foreach lib, $(LIBS), $(LIB_SOURCE))
+	$(foreach lib, $(LIBS), $(LIB_COMPILE))
