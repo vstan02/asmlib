@@ -5,7 +5,7 @@ SRC_DIR = src
 LIB_DIR = ../lib
 
 EXECUTABLE = $(BIN_DIR)/demo
-LIB_LIST = sys io
+LIB_LIST = sys io str
 
 LIB_OBJECT = $(LIB_DIR)/$(lib).o
 LIB_OBJECTS = $(foreach lib, $(LIB_LIST), $(LIB_OBJECT))
