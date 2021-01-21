@@ -10,7 +10,6 @@ make setup
 ```
 make
 ```
-or
 ```
 make build
 ```
