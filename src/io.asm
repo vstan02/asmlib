@@ -1,3 +1,4 @@
+global int_print
 global eol_print
 global chr_print
 global str_print
@@ -12,6 +13,57 @@ section .bss
 	CHR_BSS resb 1
 
 section .text
+	; input:
+	; : rax = integer
+	int_print:
+		push rax
+		push rbx
+		push rcx
+		push rdx
+
+		.start:
+			xor rcx, rcx
+			cmp rax, 0
+			jge .decomp
+
+		.negate:
+			mov rdx, rax
+
+			mov rax, '-'
+			call chr_print
+
+			mov rax, rdx
+			neg rax
+
+		.decomp:
+			mov rbx, 10
+			xor rdx, rdx
+			div rbx
+			add rdx, '0'
+			push rdx
+			inc rcx
+
+			cmp rax, 0
+			je .print
+			jmp .decomp
+
+		.print:
+			cmp rcx, 0
+			je .close
+
+			dec rcx
+			pop rax
+			call chr_print
+
+			jmp .print
+
+		.close:
+			pop rdx
+			pop rcx
+			pop rbx
+			pop rax
+			ret
+
 	eol_print:
 		push rax
 
@@ -28,6 +80,7 @@ section .text
 		push rdi
 		push rsi
 		push rdx
+		push rcx
 
 		mov [CHR_BSS], al
 		mov rax, SYS_WRITE
@@ -36,6 +89,7 @@ section .text
 		mov rdx, 1
 		syscall
 
+		pop rcx
 		pop rdx
 		pop rsi
 		pop rdi
@@ -49,6 +103,7 @@ section .text
 		push rdi
 		push rsi
 		push rdx
+		push rcx
 
 		mov rsi, rax
 		call str_len
@@ -57,6 +112,7 @@ section .text
 		mov rdi, SYS_STDOUT
 		syscall
 
+		pop rcx
 		pop rdx
 		pop rsi
 		pop rdi

@@ -1,15 +1,12 @@
 global _start
 
+extern int_print
 extern eol_print
-extern str_print
 extern sys_exit
-
-section .data
-	msg db "Hello World!", 0x0
 
 section .text
 	_start:
-		mov rax, msg
-		call str_print
+		mov rax, -575
+		call int_print
 		call eol_print
 		call sys_exit
