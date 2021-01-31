@@ -9,7 +9,7 @@ CC = nasm -felf64
 SRC_DIR = src
 LIB_DIR = lib
 
-LIBS := sys io str
+LIBS := sys io str rand
 
 LIB_SOURCE = $(SRC_DIR)/$(lib).asm
 LIB_OBJECT = $(LIB_DIR)/$(lib).o
