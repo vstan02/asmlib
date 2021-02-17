@@ -20,6 +20,9 @@ section .text
 	; : rax = integer array
 	; : rdi = array size
 	arr_print:
+		push rbx
+		push rcx
+
 		mov rbx, rax
 		xor rcx, rcx
 
@@ -47,6 +50,11 @@ section .text
 	.close:
 		mov rax, ']'
 		call chr_print
+
+		mov rax, rbx
+
+		pop rcx
+		pop rbx
 		ret
 
 	; input:

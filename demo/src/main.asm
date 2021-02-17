@@ -15,4 +15,7 @@ section .text
 		mov rdi, arrlen
 		call arr_print
 		call eol_print
+
+		call arr_print
+		call eol_print
 		call sys_exit
