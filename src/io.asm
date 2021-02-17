@@ -64,8 +64,7 @@ section .text
 		push rbx
 		push rcx
 		push rdx
-
-	.start:
+		
 		xor rcx, rcx
 		cmp rax, 0
 		jge .decomp
