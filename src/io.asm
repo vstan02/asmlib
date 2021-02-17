@@ -1,3 +1,4 @@
+global arr_print
 global int_print
 global eol_print
 global chr_print
@@ -9,10 +10,45 @@ section .data
 	SYS_WRITE equ 0x1
 	SYS_STDOUT equ 1
 
+	INT_SIZE equ 8
+
 section .bss
 	CHR_BSS resb 1
 
 section .text
+	; | input:
+	; : rax = integer array
+	; : rdi = array size
+	arr_print:
+		mov rbx, rax
+		xor rcx, rcx
+
+		mov rax, '['
+		call chr_print
+
+		cmp rdi, 0
+		je .close
+
+	.iter:
+		mov rax, [rbx + rcx * INT_SIZE]
+		call int_print
+
+		inc rcx
+		cmp rcx, rdi
+		je .close
+
+		mov rax, ','
+		call chr_print
+		mov rax, ' '
+		call chr_print
+
+		jmp .iter
+
+	.close:
+		mov rax, ']'
+		call chr_print
+		ret
+
 	; input:
 	; : rax = integer
 	int_print:
@@ -21,48 +57,48 @@ section .text
 		push rcx
 		push rdx
 
-		.start:
-			xor rcx, rcx
-			cmp rax, 0
-			jge .decomp
+	.start:
+		xor rcx, rcx
+		cmp rax, 0
+		jge .decomp
 
-		.negate:
-			mov rdx, rax
+	.negate:
+		mov rdx, rax
 
-			mov rax, '-'
-			call chr_print
+		mov rax, '-'
+		call chr_print
 
-			mov rax, rdx
-			neg rax
+		mov rax, rdx
+		neg rax
 
-		.decomp:
-			mov rbx, 10
-			xor rdx, rdx
-			div rbx
-			add rdx, '0'
-			push rdx
-			inc rcx
+	.decomp:
+		mov rbx, 10
+		xor rdx, rdx
+		div rbx
+		add rdx, '0'
+		push rdx
+		inc rcx
 
-			cmp rax, 0
-			je .print
-			jmp .decomp
+		cmp rax, 0
+		je .print
+		jmp .decomp
 
-		.print:
-			cmp rcx, 0
-			je .close
+	.print:
+		cmp rcx, 0
+		je .close
 
-			dec rcx
-			pop rax
-			call chr_print
+		dec rcx
+		pop rax
+		call chr_print
 
-			jmp .print
+		jmp .print
 
-		.close:
-			pop rdx
-			pop rcx
-			pop rbx
-			pop rax
-			ret
+	.close:
+		pop rdx
+		pop rcx
+		pop rbx
+		pop rax
+		ret
 
 	eol_print:
 		push rax

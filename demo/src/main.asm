@@ -1,17 +1,18 @@
 global _start
 
-extern srand
-extern rand
-extern sys_time
-extern int_print
+extern arr_print
+extern chr_print
 extern eol_print
 extern sys_exit
 
+section .data
+	array dq 2, 3, 5, 2, 6, 5
+	arrlen equ ($-array)/8
+
 section .text
 	_start:
-		mov rax, 1
-		call srand
-		call rand
-		call int_print
+		mov rax, array
+		mov rdi, arrlen
+		call arr_print
 		call eol_print
 		call sys_exit

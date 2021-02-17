@@ -9,13 +9,13 @@ section .text
 		push rbx
 		xor rbx, rbx
 
-		.iter:
-			cmp [rax+rbx], byte 0x0
-			je .close
-			inc rbx
-			jmp .iter
+	.iter:
+		cmp [rax+rbx], byte 0x0
+		je .close
+		inc rbx
+		jmp .iter
 
-		.close:
-			mov rax, rbx
-			pop rbx
-			ret
+	.close:
+		mov rax, rbx
+		pop rbx
+		ret
